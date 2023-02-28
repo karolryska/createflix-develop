@@ -3,6 +3,7 @@ import AppHeader from '../components/app-header/AppHeader';
 import AppFooter from '../components/app-footer/AppFooter';
 import Movies from './Movies';
 import Favorites from './Favorites';
+import Instructions from '../../scenes/instructions/Instructions';
 import './App.css';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
                     <Routes>
                         <Route path='/movie-list' element={<Movies />} />
                         <Route path='/favorites' element={<Favorites />} />
+                        <Route path='/instructions' element={<Instructions />} />
                     </Routes>
                 </main>
                 <AppFooter />
