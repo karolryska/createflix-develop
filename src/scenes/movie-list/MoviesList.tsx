@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import MoviesList from '../components/movies-list/MoviesList';
+import MoviesList from '../../elements/components/movies-list/MoviesList';
 import { Movie } from '../../types';
 
 type MoviesResponseType = {
