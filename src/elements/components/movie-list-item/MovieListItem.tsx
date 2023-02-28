@@ -14,7 +14,7 @@ export default function MovieListItem({ data, isFavorite }: MovieListItemProps) 
     const handleButtonClick = () => (isFavorite ? removeFavorite(id) : addFavorite(data));
 
     return (
-        <article className={['mt-6', 'mb-12', 'shadow-xl', 'h-max'].join(' ')}>
+        <article className={['shadow-xl', 'h-max', 'rounded-2xl', 'overflow-hidden'].join(' ')}>
             <div className={['flex', 'font-sans'].join(' ')}>
                 <div className={['flex-none', 'w-48', 'relative'].join(' ')}>
                     <img

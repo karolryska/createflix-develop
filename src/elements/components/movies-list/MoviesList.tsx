@@ -10,7 +10,7 @@ export default function MoviesList({ data }: MovieListProps) {
     const { favorites } = useFavorites();
 
     return (
-        <ul className={['flex', 'flex-col'].join(' ')}>
+        <ul className={['flex', 'flex-col', 'p-8', 'gap-8'].join(' ')}>
             {!!data.length &&
                 data.map((movie) => (
                     <li className={['flex', 'font-sans'].join(' ')}>
