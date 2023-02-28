@@ -75,3 +75,9 @@ export type Movie = {
         };
     };
 };
+
+export type MovieListItem = {
+    posterImage: string;
+    title: string;
+    description: string;
+};
