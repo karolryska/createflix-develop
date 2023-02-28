@@ -9,9 +9,9 @@ import './App.css';
 function App() {
     return (
         <Router>
-            <div className='App'>
+            <div className={['min-h-screen', 'flex', 'flex-col'].join(' ')}>
                 <AppHeader />
-                <main>
+                <main className={['grow'].join(' ')}>
                     <Routes>
                         <Route path='/movie-list' element={<MoviesList />} />
                         <Route path='/favorites' element={<Favorites />} />
