@@ -1,0 +1,108 @@
+image: node:16.10.0
+
+stages:
+  - install
+#  - test
+  - build
+  - deploy
+
+cache: &global_cache
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+  policy: pull
+
+.deploy_aws:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  before_script:
+    - aws configure set aws_access_key_id ${AWS_ACCESS_KEY}
+    - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+
+npm-install:
+  stage: install
+  script:
+    - npm ci --cac--no-git-tag-versione --cache .npm --prefer-offline
+  cache:
+    <<: *global_cache
+    policy: push
+  tags:
+    - testing
+
+#npm-test:
+#  stage: test
+#  script:
+#    - npm run test
+#  cache:
+#    <<: *global_cache
+#    policy: pull
+#  tags:
+#    - testing
+
+npm-build:
+  stage: build
+  artifacts:
+    paths:
+      - build/
+      - storybook-static/
+    name: ${CI_COMMIT_REF_SLUG}
+    expire_in: 30 days
+  script:
+    - npm run postinstall
+    - npm run build
+    - npm run build-storybook
+  cache:
+    <<: *global_cache
+    policy: pull-push
+  tags:
+    - testing
+
+deploy-dev:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  dependencies:
+    - npm-build
+  extends: .deploy_aws
+  stage: deploy
+  cache:
+    <<: *global_cache
+  script:
+    - aws s3 sync ./storybook-static s3://${S3_BUCKET}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/_dev/storybook/
+    - aws s3 sync ./build s3://${S3_BUCKET}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/_dev/app/
+  only:
+    refs:
+      - develop
+  tags:
+    - testing
+
+deploy-tag:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  dependencies:
+    - npm-build
+  extends: .deploy_aws
+  stage: deploy
+  cache:
+    <<: *global_cache
+  script:
+      - aws s3 sync ./storybook-static s3://${S3_BUCKET}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${CI_COMMIT_TAG}/storybook/
+      - aws s3 sync ./build s3://${S3_BUCKET}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/${CI_COMMIT_TAG}/app/
+  only:
+    refs:
+      - tags
+  tags:
+    - testing
+
+deploy-stage:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  dependencies:
+    - npm-build
+  extends: .deploy_aws
+  stage: deploy
+  cache:
+    <<: *global_cache
+  script:
+    - aws s3 sync ./storybook-static s3://${S3_BUCKET}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/_stage/storybook/
+    - aws s3 sync ./build s3://${S3_BUCKET}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/_stage/app/
+  only:
+    refs:
+      - master
+  tags:
+    - testing
