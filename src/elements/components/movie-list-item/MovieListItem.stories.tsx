@@ -12,7 +12,12 @@ export default {
 } as ComponentMeta<typeof MovieListItem>;
 
 const Template: ComponentStory<typeof MovieListItem> = function () {
-    return <MovieListItem data={{ posterImage: 'string', title: 'string', description: 'test' }} />;
+    return (
+        <MovieListItem
+            data={{ id: '1', posterImage: 'string', title: 'string', description: 'test' }}
+            isFavorite
+        />
+    );
 };
 
 export const MovieListItemExample = Template.bind({});
