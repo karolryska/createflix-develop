@@ -54,7 +54,7 @@ export type Movie = {
     id: {
         label: string;
         attributes: {
-            'im:id': number;
+            'im:id': string;
         };
     };
     'im:artist': {
