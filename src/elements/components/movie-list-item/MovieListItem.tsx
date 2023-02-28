@@ -1,11 +1,17 @@
+import { useFavorites } from '../../../store';
 import { MovieListItem as MovieListItemType } from '../../../types';
 
 type MovieListItemProps = {
     data: MovieListItemType;
+    isFavorite: boolean;
 };
 
-export default function MovieListItem({ data }: MovieListItemProps) {
-    const { title, posterImage, description } = data;
+export default function MovieListItem({ data, isFavorite }: MovieListItemProps) {
+    const { id, title, posterImage, description } = data;
+
+    const { addFavorite, removeFavorite } = useFavorites();
+
+    const handleButtonClick = () => (isFavorite ? removeFavorite(id) : addFavorite(data));
 
     return (
         <article className={['mt-6', 'mb-12', 'shadow-xl', 'h-max'].join(' ')}>
@@ -47,6 +53,7 @@ export default function MovieListItem({ data }: MovieListItemProps) {
                                     'border',
                                     'border-slate-200',
                                 ].join(' ')}
+                                onClick={handleButtonClick}
                                 type='button'
                                 aria-label='Like'>
                                 <svg width='20' height='20' fill='black' aria-hidden='true'>
