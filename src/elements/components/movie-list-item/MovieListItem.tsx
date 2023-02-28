@@ -56,7 +56,11 @@ export default function MovieListItem({ data, isFavorite }: MovieListItemProps) 
                                 onClick={handleButtonClick}
                                 type='button'
                                 aria-label='Like'>
-                                <svg width='20' height='20' fill='black' aria-hidden='true'>
+                                <svg
+                                    width='20'
+                                    height='20'
+                                    fill={isFavorite ? 'red' : 'black'}
+                                    aria-hidden='true'>
                                     <path
                                         fillRule='evenodd'
                                         clipRule='evenodd'
