@@ -11,7 +11,7 @@ function Favorites() {
     return favorites.length ? (
         <MoviesList data={favorites} />
     ) : (
-        <span>You don't have any favorite movies yet</span>
+        <span className={['m-auto'].join(' ')}>You don't have any favorite movies yet</span>
     );
 }
 

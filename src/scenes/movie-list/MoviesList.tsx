@@ -28,7 +28,7 @@ function Movies() {
 
     return (
         <>
-            {isLoading && <span>Loading...</span>}
+            {isLoading && <span className={['m-auto'].join(' ')}>Loading...</span>}
             {!!movies?.length && !isLoading && (
                 <MoviesList
                     data={movies.map((item) => {

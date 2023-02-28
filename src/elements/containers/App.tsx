@@ -11,7 +11,7 @@ function App() {
         <Router>
             <div className={['min-h-screen', 'flex', 'flex-col'].join(' ')}>
                 <AppHeader />
-                <main className={['grow'].join(' ')}>
+                <main className={['flex', 'grow'].join(' ')}>
                     <Routes>
                         <Route path='/movie-list' element={<MoviesList />} />
                         <Route path='/favorites' element={<Favorites />} />
