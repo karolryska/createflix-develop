@@ -1,9 +1,7 @@
+import { MovieListItem as MovieListItemType } from '../../../types';
+
 type MovieListItemProps = {
-    data: {
-        posterImage: string;
-        title: string;
-        description: string;
-    };
+    data: MovieListItemType;
 };
 
 export default function MovieListItem({ data }: MovieListItemProps) {

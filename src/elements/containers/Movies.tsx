@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import MovieListItem from '../components/movie-list-item/MovieListItem';
+import MoviesList from '../components/movies-list/MoviesList';
 import { Movie } from '../../types';
 
 type MoviesResponseType = {
@@ -29,17 +29,17 @@ function Movies() {
     return (
         <>
             {isLoading && <span>Loading...</span>}
-            {!!movies &&
-                !isLoading &&
-                movies.map((item) => (
-                    <MovieListItem
-                        data={{
+            {!!movies?.length && !isLoading && (
+                <MoviesList
+                    data={movies.map((item) => {
+                        return {
                             posterImage: item['im:image'][2].label,
                             title: item['im:name'].label,
                             description: item.summary.label,
-                        }}
-                    />
-                ))}
+                        };
+                    })}
+                />
+            )}
         </>
     );
 }
