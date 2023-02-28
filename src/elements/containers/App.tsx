@@ -11,7 +11,7 @@ function App() {
                 <AppHeader />
                 <main>
                     <Routes>
-                        <Route path='/movies' element={<Movies />} />
+                        <Route path='/movie-list' element={<Movies />} />
                     </Routes>
                 </main>
                 <AppFooter />
