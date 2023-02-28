@@ -77,6 +77,7 @@ export type Movie = {
 };
 
 export type MovieListItem = {
+    id: string;
     posterImage: string;
     title: string;
     description: string;

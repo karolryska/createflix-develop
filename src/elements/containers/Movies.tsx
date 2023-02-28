@@ -33,6 +33,7 @@ function Movies() {
                 <MoviesList
                     data={movies.map((item) => {
                         return {
+                            id: item.id.attributes['im:id'],
                             posterImage: item['im:image'][2].label,
                             title: item['im:name'].label,
                             description: item.summary.label,
